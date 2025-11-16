@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://quran-wa-sunnah.netlify.app/sitemap.xml
