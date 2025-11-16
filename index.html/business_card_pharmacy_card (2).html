@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>قرآن وسنة</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Cairo', sans-serif;
+      background-color: #f4fdf8;
+      color: #2c3e50;
+      background-image: url('https://i.ibb.co/6Nt0g9V/islamic-pattern.png');
+      background-size: cover;
+      background-attachment: fixed;
+    }
+    header {
+      background-color: rgba(30,130,76,0.9);
+      color: white;
+      padding: 20px;
+      text-align: center;
+      border-bottom: 5px solid #f1c40f;
+    }
+    nav {
+      background-color: rgba(20,90,50,0.95);
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      border-bottom: 3px solid #f1c40f;
+    }
+    nav a {
+      color: white;
+      padding: 15px 20px;
+      text-decoration: none;
+      display: block;
+      font-weight: bold;
+    }
+    nav a:hover {
+      background-color: #117a38;
+      border-radius: 8px;
+    }
+    .hero {
+      padding: 40px 20px;
+      text-align: center;
+      background: rgba(212,239,223,0.9);
+      border-bottom: 3px solid #1e824c;
+    }
+    .hero h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+    }
+    /* تنسيق قسم البحث الجديد */
+    .search-section {
+        text-align: center;
+        padding: 30px 20px 10px; 
+        background-color: rgba(255, 255, 255, 0.9);
+    }
+    .search-section label {
+        display: block;
+        margin-bottom: 15px;
+        font-size: 1.2em;
+        color: #1e824c;
+        font-weight: bold;
+    }
+    .qari-search-input {
+        width: 70%; 
+        max-width: 600px; 
+        padding: 12px 20px;
+        border: 2px solid #1e824c;
+        border-radius: 30px; 
+        font-size: 1em;
+        text-align: right;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        transition: border-color 0.3s;
+    }
+    .qari-search-input:focus {
+        border-color: #f1c40f; 
+        outline: none;
+    }
+    /* نهاية تنسيق البحث الجديد */
+    .ayah {
+      text-align: center;
+      font-size: 1.8em;
+      color: #145a32;
+      margin: 40px 20px;
+      padding: 30px;
+      background: #ffffff;
+      border-radius: 20px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+      line-height: 1.8;
+      position: relative;
+    }
+    .ayah::before, .ayah::after {
+      content: "﴾";
+      font-size: 2em;
+      color: #f1c40f;
+      position: absolute;
+      top: -15px;
+    }
+    .ayah::before {
+      left: 20px;
+    }
+    .ayah::after {
+      right: 20px;
+      transform: rotate(180deg);
+    }
+    .sections {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 20px;
+      gap: 20px;
+    }
+    .card {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      padding: 20px;
+      width: 300px;
+      text-align: center;
+      border: 2px solid #f1c40f;
+    }
+    .card h2 {
+      color: #1e824c;
+    }
+    footer {
+      background-color: rgba(20,90,50,0.95);
+      color: white;
+      text-align: center;
+      padding: 15px;
+      margin-top: 40px;
+      border-top: 3px solid #f1c40f;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>موقع قرآن وسنة</h1>
+    <p>سماع القرآن الكريم، الأحاديث النبوية، والمزيد من علوم الدين</p>
+  </header>
+  <nav>
+    <a href="mashaekh.html" target="_blank">القرآن الكريم</a>
+    <a href="ahades.html" class="active">الأحاديث</a>
+    <a href="#">مقالات</a>
+    <a href="#">سؤال وجواب</a>
+    <a href="#">اتصل بنا</a>
+  </nav>
+  <section class="hero">
+    <h1>مرحبًا بك في موقع قرآن وسنة</h1>
+    <p>منصة إسلامية للاستماع والقراءة والتعلم من الكتاب والسنة</p>
+  </section>
+  
+  <section class="search-section">
+    <label for="qari-search">ابحث عن القارئ الذي تفضله:</label>
+    <input type="search" id="qari-search" name="qari-search" placeholder="اكتب اسم القارئ مثل: عبد الباسط، المنشاوي، السديس..." 
+           class="qari-search-input">
+  </section>
+
+  <div class="ayah">
+    ﴿ إِنَّ هَـٰذَا ٱلۡقُرۡءَانَ يَهۡدِي لِلَّتِي هِيَ أَقۡوَمُ ﴾<br>
+    <span style="font-size:0.7em; color:#555;">سورة الإسراء - 9</span>
+  </div>
+
+  <section class="sections">
+    <div class="card">
+      <h2>📖 القرآن الكريم</h2>
+      <ul style="list-style: none; padding: 0; margin: 0; text-align: right;">
+        <li><a href="#" style="text-decoration: none; color: #1e824c;">سور قصيرة</a></li>
+        <li><a href="#" style="text-decoration: none; color: #1e824c;">تفسير مبسط</a></li>
+        <li><a href="#" style="text-decoration: none; color: #1e824c;">مصحف مرتل</a></li>
+        <li><a href="#" style="text-decoration: none; color: #1e824c;">قراءة للأطفال</a></li>
+      </ul>
+      <p>استمع لآيات الله بصوت كبار القراء.</p>
+    </div>
+    <div class="card">
+      <h2>🕌 أحاديث نبوية</h2>
+      <p>تعلم من سنّة النبي ﷺ أحاديث صحيحة موثوقة.</p>
+    </div>
+    <div class="card">
+      <h2>📚 مقالات دينية</h2>
+      <p>معلومات عن الصلاة، الصيام، الطهارة، وغيرها.</p>
+    </div>
+    <div class="card">
+      <h2>❓ سؤال وجواب</h2>
+      <p>أجب على استفساراتك الدينية بسهولة.</p>
+    </div>
+  </section>
+  <footer>
+    &copy; 2025 قرآن وسنة - جميع الحقوق محفوظة
+  </footer>
+
+  <script>
+    // 1. قائمة بأسماء القراء المتاحة وروابط صفحاتهم (تم إضافة قائمة شاملة)
+    const availableQarisData = [
+        // المشايخ الأوائل
+        { name: "أبو بكر الشاطري", link: "ABOBAKR ASHATER.html" }, // الرابط الذي طلبته
+        { name: "عبد الباسط عبد الصمد", link: "qari/abdulbaset.html" },
+        { name: "محمد صديق المنشاوي", link: "qari/minshawi.html" },
+        
+        // مشايخ الحرمين وغيرهم
+        { name: "عبد الرحمن السديس", link: "qari/sudais.html" },
+        { name: "ماهر المعيقلي", link: "qari/muaiqly.html" },
+        { name: "سعود الشريم", link: "qari/shuraim.html" },
+        { name: "علي عبد الرحمن الحذيفي", link: "qari/huthayfi.html" },
+        { name: "ياسر الدوسري", link: "qari/dossary.html" },
+        
+        // مشايخ من دول عربية أخرى
+        { name: "مشاري بن راشد العفاسي", link: "qari/afasy.html" },
+        { name: "أحمد بن علي العجمي", link: "qari/ajami.html" },
+        { name: "ناصر القطامي", link: "qari/qatami.html" },
+        { name: "خالد الجليل", link: "qari/jalil.html" },
+        { name: "فارس عباد", link: "qari/abbad.html" },
+        { name: "محمد أيوب", link: "qari/ayyub.html" },
+        { name: "هاني الرفاعي", link: "qari/rifai.html" }
+        // يمكنك إضافة المزيد من المشايخ هنا
+    ];
+
+    // **الدالة المضافة لتطبيع الأحرف العربية وتوحيدها**
+    function normalizeArabic(text) {
+        if (!text) return '';
+        // 1. تحويل النص إلى أحرف صغيرة وإزالة المسافات الزائدة
+        text = text.trim().toLowerCase();
+        // 2. توحيد الألفات (ا، أ، إ، آ) إلى ألف عادية
+        text = text.replace(/([إأآ])/g, 'ا');
+        // 3. توحيد التاء المربوطة (ة) إلى هاء (ه)
+        text = text.replace(/ة/g, 'ه');
+        // 4. توحيد الألف المقصورة (ى) إلى ياء (ي)
+        text = text.replace(/ى/g, 'ي');
+        return text;
+    }
+
+    // 2. خوارزمية مسافة ليفنشتاين (Levenshtein Distance)
+    function levenshteinDistance(s1, s2) {
+        // **استخدام دالة التطبيع على كلتا السلسلتين قبل المقارنة**
+        s1 = normalizeArabic(s1);
+        s2 = normalizeArabic(s2);
+
+        const costs = [];
+        for (let i = 0; i <= s1.length; i++) {
+            let lastValue = i;
+            for (let j = 0; j <= s2.length; j++) {
+                if (i === 0) {
+                    costs[j] = j;
+                } else if (j > 0) {
+                    let newValue = costs[j - 1];
+                    if (s1.charAt(i - 1) !== s2.charAt(j - 1)) {
+                        newValue = Math.min(Math.min(newValue, lastValue), costs[j]) + 1;
+                    }
+                    costs[j - 1] = lastValue;
+                    lastValue = newValue;
+                }
+            }
+            if (i > 0) {
+                costs[s2.length] = lastValue;
+            }
+        }
+        return costs[s2.length];
+    }
+
+    // 3. وظيفة البحث الذكية (Fuzzy Search)
+    function fuzzySearch(query, listData, maxDistance = 2) {
+        const results = [];
+        
+        listData.forEach(qariObject => {
+            // نقوم بحساب المسافة باستخدام اسم القارئ فقط
+            const distance = levenshteinDistance(query, qariObject.name);
+            
+            // نطابق إذا كان الفرق أقل من أو يساوي الحد الأقصى المسموح به (2)
+            if (distance <= maxDistance) {
+                // نُضيف الكائن بالكامل إلى النتائج، مع تضمين المسافة
+                results.push({ qari: qariObject, distance });
+            }
+        });
+        
+        // فرز النتائج: الأقرب هو الأفضل (مسافة أقل)
+        results.sort((a, b) => a.distance - b.distance);
+        
+        return results;
+    }
+
+    // 4. ربط وظيفة البحث بـ خانة الإدخال
+    document.addEventListener('DOMContentLoaded', () => {
+        const searchInput = document.getElementById('qari-search');
+        
+        // إنشاء مكان لعرض النتائج (أسفل خانة البحث مباشرة)
+        let resultsContainer = document.getElementById('search-results');
+        if (!resultsContainer) {
+            resultsContainer = document.createElement('div');
+            resultsContainer.id = 'search-results';
+            resultsContainer.style.textAlign = 'center';
+            resultsContainer.style.marginTop = '10px';
+            searchInput.parentNode.insertBefore(resultsContainer, searchInput.nextSibling);
+        }
+
+        searchInput.addEventListener('input', (event) => {
+            const query = event.target.value.trim();
+            resultsContainer.innerHTML = ''; // مسح النتائج القديمة
+
+            if (query.length > 2) { 
+                // نمرر قائمة الكائنات التي تحتوي على الاسم والرابط
+                const results = fuzzySearch(query, availableQarisData, 2); 
+
+                if (results.length > 0) {
+                    let html = '<p style="color:#1e824c; font-weight:bold;">هل تقصد أحد هؤلاء؟</p>';
+                    html += '<ul style="list-style: none; padding: 0; display: inline-block; text-align: right;">';
+                    results.forEach(result => {
+                        // استخدام الرابط (result.qari.link) لربط اسم القارئ بالصفحة المطلوبة
+                        html += `<li style="margin-bottom: 5px; background: #fff; padding: 8px 15px; border-radius: 5px; border: 1px solid #ddd; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                                     <a href="${result.qari.link}" style="text-decoration: none; color: #1e824c; font-weight: bold;">${result.qari.name}</a> 
+                                     <span style="font-size: 0.8em; color: #777; margin-right: 10px;">(فرق: ${result.distance} حرف)</span>
+                                 </li>`;
+                    });
+                    html += '</ul>';
+                    resultsContainer.innerHTML = html;
+                } else {
+                     resultsContainer.innerHTML = '<p style="color:#e74c3c;">لا توجد نتائج مطابقة قريبة.</p>';
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>

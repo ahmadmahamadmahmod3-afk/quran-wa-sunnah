@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>القرآن الكريم بصوت القارئ (Tawfeeq)</title>
+  <style>
+    /* تصميم متناسق (Responsive Design) */
+    :root {
+      --primary-color: #004d40;
+      --secondary-color: #4db6ac;
+      --highlight-color: #a7ffeb;
+      --light-bg: #f5f5f5;
+      --dark-text: #333;
+    }
+    body {
+      font-family: 'Droid Arabic Naskh', Tahoma, sans-serif;
+      background-color: var(--light-bg);
+      color: var(--dark-text);
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+    header {
+      background: var(--primary-color);
+      color: #fff;
+      text-align: center;
+      padding: 25px 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .container {
+      max-width: 1000px;
+      width: 95%;
+      margin: 20px auto;
+      padding: 10px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    }
+    .reciter-profile {
+      text-align: center;
+      margin: 20px 0 30px;
+      padding: 15px;
+      border-bottom: 2px solid var(--secondary-color);
+    }
+    .reciter-profile h2 {
+      margin-top: 10px;
+      color: var(--primary-color);
+      font-size: 1.8em;
+    }
+    /* تنسيق الجدول */
+    .surah-list {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+    .surah-list th, .surah-list td {
+      border: 1px solid #ddd;
+      padding: 12px 8px;
+      text-align: center;
+      font-size: 0.95em;
+      transition: background-color 0.3s, box-shadow 0.3s;
+    }
+    .surah-list th {
+      background-color: var(--primary-color);
+      color: white;
+      font-weight: bold;
+    }
+    .surah-list tr:nth-child(even) { background-color: #fcfcfc; }
+    .surah-list tr:hover:not(.is-playing) { background-color: #e0f2f1; }
+    
+    /* تمييز الصف النشط */
+    .surah-list tr.is-playing {
+      background-color: var(--highlight-color);
+      color: var(--primary-color);
+      font-weight: bold;
+      box-shadow: 0 0 15px rgba(0, 200, 83, 0.3); 
+      border: 1px solid var(--primary-color) !important;
+    }
+
+    /* تنسيق زر التشغيل */
+    .play-audio-btn {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1em;
+        transition: background-color 0.2s, transform 0.1s;
+        min-width: 100px;
+    }
+    .play-audio-btn:hover {
+        background-color: #00897b;
+        transform: translateY(-1px);
+    }
+
+    /* تنسيق مشغل الصوت الذي يظهر ديناميكيا */
+    .audio-player-container audio {
+      width: 100%;
+      max-width: 200px;
+      height: 30px;
+    }
+    
+    /* تنسيق الروابط الأخرى */
+    a {
+      text-decoration: none;
+      color: var(--primary-color);
+      font-weight: bold;
+      transition: color 0.3s;
+      display: block; 
+      padding: 5px 0;
+    }
+    a:hover {
+      color: #ff9800;
+    }
+    
+    /* Media Query: تنسيق خاص بالجوالات */
+    @media (max-width: 600px) {
+        .surah-list, .surah-list tbody, .surah-list tr, .surah-list td {
+            display: block;
+            width: 100%;
+        }
+        .surah-list thead {
+            display: none;
+        }
+        /* (تنسيقات الجوالات الأخرى كما هي) */
+        .surah-list tr.is-playing {
+             border: 2px solid var(--primary-color) !important;
+        }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>📖 القرآن الكريم بصوت القارئ (توفيق الصايغ)</h1>
+  </header>
+
+  <div class="container">
+      <div class="reciter-profile">
+        <h2>مصاحف ذات جودة عالية برواية حفص عن عاصم</h2>
+        <p>بصوت الشيخ توفيق الصايغ".</p>
+      </div>
+
+      <table class="surah-list">
+        <thead>
+            <tr>
+              <th>رقم</th>
+              <th>السورة</th>
+              <th>استماع</th>
+              <th>تحميل (رابط مباشر)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+              <td data-label="رقم">1</td>
+              <td data-label="السورة">الفاتحة</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/001.mp3">
+                  <button class="play-audio-btn" data-surah-id="1">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/001.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">2</td>
+              <td data-label="السورة">البقرة</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/002.mp3">
+                  <button class="play-audio-btn" data-surah-id="2">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/002.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">3</td>
+              <td data-label="السورة">آل عمران</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/003.mp3">
+                  <button class="play-audio-btn" data-surah-id="3">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/003.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">4</td>
+              <td data-label="السورة">النساء</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/004.mp3">
+                  <button class="play-audio-btn" data-surah-id="4">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/004.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">5</td>
+              <td data-label="السورة">المائدة</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/005.mp3">
+                  <button class="play-audio-btn" data-surah-id="5">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/005.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">6</td>
+              <td data-label="السورة">الأنعام</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/006.mp3">
+                  <button class="play-audio-btn" data-surah-id="6">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/006.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">7</td>
+              <td data-label="السورة">الأعراف</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/007.mp3">
+                  <button class="play-audio-btn" data-surah-id="7">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/007.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">8</td>
+              <td data-label="السورة">الأنفال</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/008.mp3">
+                  <button class="play-audio-btn" data-surah-id="8">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/008.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">9</td>
+              <td data-label="السورة">التوبة</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/009.mp3">
+                  <button class="play-audio-btn" data-surah-id="9">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/009.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">10</td>
+              <td data-label="السورة">يونس</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/010.mp3">
+                  <button class="play-audio-btn" data-surah-id="10">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/010.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">11</td>
+              <td data-label="السورة">هود</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/011.mp3">
+                  <button class="play-audio-btn" data-surah-id="11">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/011.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">12</td>
+              <td data-label="السورة">يوسف</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/012.mp3">
+                  <button class="play-audio-btn" data-surah-id="12">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/012.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">13</td>
+              <td data-label="السورة">الرعد</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/013.mp3">
+                  <button class="play-audio-btn" data-surah-id="13">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/013.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">14</td>
+              <td data-label="السورة">إبراهيم</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/014.mp3">
+                  <button class="play-audio-btn" data-surah-id="14">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/014.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">15</td>
+              <td data-label="السورة">الحجر</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/015.mp3">
+                  <button class="play-audio-btn" data-surah-id="15">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/015.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">16</td>
+              <td data-label="السورة">النحل</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/016.mp3">
+                  <button class="play-audio-btn" data-surah-id="16">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/016.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">17</td>
+              <td data-label="السورة">الإسراء</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/017.mp3">
+                  <button class="play-audio-btn" data-surah-id="17">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/017.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">18</td>
+              <td data-label="السورة">الكهف</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/018.mp3">
+                  <button class="play-audio-btn" data-surah-id="18">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/018.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">19</td>
+              <td data-label="السورة">مريم</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/019.mp3">
+                  <button class="play-audio-btn" data-surah-id="19">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/019.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">20</td>
+              <td data-label="السورة">طه</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/020.mp3">
+                  <button class="play-audio-btn" data-surah-id="20">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/020.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">21</td>
+              <td data-label="السورة">الأنبياء</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/021.mp3">
+                  <button class="play-audio-btn" data-surah-id="21">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/021.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">22</td>
+              <td data-label="السورة">الحج</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/022.mp3">
+                  <button class="play-audio-btn" data-surah-id="22">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/022.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">23</td>
+              <td data-label="السورة">المؤمنون</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/023.mp3">
+                  <button class="play-audio-btn" data-surah-id="23">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/023.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">24</td>
+              <td data-label="السورة">النور</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/024.mp3">
+                  <button class="play-audio-btn" data-surah-id="24">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/024.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">25</td>
+              <td data-label="السورة">الفرقان</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/025.mp3">
+                  <button class="play-audio-btn" data-surah-id="25">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/025.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">26</td>
+              <td data-label="السورة">الشعراء</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/026.mp3">
+                  <button class="play-audio-btn" data-surah-id="26">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/026.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">27</td>
+              <td data-label="السورة">النمل</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/027.mp3">
+                  <button class="play-audio-btn" data-surah-id="27">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/027.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">28</td>
+              <td data-label="السورة">القصص</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/028.mp3">
+                  <button class="play-audio-btn" data-surah-id="28">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/028.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">29</td>
+              <td data-label="السورة">العنكبوت</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/029.mp3">
+                  <button class="play-audio-btn" data-surah-id="29">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/029.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">30</td>
+              <td data-label="السورة">الروم</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/030.mp3">
+                  <button class="play-audio-btn" data-surah-id="30">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/030.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">31</td>
+              <td data-label="السورة">لقمان</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/031.mp3">
+                  <button class="play-audio-btn" data-surah-id="31">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/031.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">32</td>
+              <td data-label="السورة">السجدة</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/032.mp3">
+                  <button class="play-audio-btn" data-surah-id="32">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/032.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">33</td>
+              <td data-label="السورة">الأحزاب</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/033.mp3">
+                  <button class="play-audio-btn" data-surah-id="33">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/033.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">34</td>
+              <td data-label="السورة">سبأ</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/034.mp3">
+                  <button class="play-audio-btn" data-surah-id="34">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/034.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">35</td>
+              <td data-label="السورة">فاطر</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/035.mp3">
+                  <button class="play-audio-btn" data-surah-id="35">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/035.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">36</td>
+              <td data-label="السورة">يس</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/036.mp3">
+                  <button class="play-audio-btn" data-surah-id="36">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/036.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">37</td>
+              <td data-label="السورة">الصافات</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/037.mp3">
+                  <button class="play-audio-btn" data-surah-id="37">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/037.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">38</td>
+              <td data-label="السورة">ص</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/038.mp3">
+                  <button class="play-audio-btn" data-surah-id="38">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/038.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">39</td>
+              <td data-label="السورة">الزمر</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/039.mp3">
+                  <button class="play-audio-btn" data-surah-id="39">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/039.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">40</td>
+              <td data-label="السورة">غافر</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/040.mp3">
+                  <button class="play-audio-btn" data-surah-id="40">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/040.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">41</td>
+              <td data-label="السورة">فصلت</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/041.mp3">
+                  <button class="play-audio-btn" data-surah-id="41">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/041.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">42</td>
+              <td data-label="السورة">الشورى</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/042.mp3">
+                  <button class="play-audio-btn" data-surah-id="42">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/042.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">43</td>
+              <td data-label="السورة">الزخرف</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/043.mp3">
+                  <button class="play-audio-btn" data-surah-id="43">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/043.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">44</td>
+              <td data-label="السورة">الدخان</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/044.mp3">
+                  <button class="play-audio-btn" data-surah-id="44">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/044.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">45</td>
+              <td data-label="السورة">الجاثية</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/045.mp3">
+                  <button class="play-audio-btn" data-surah-id="45">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/045.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">46</td>
+              <td data-label="السورة">الأحقاف</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/046.mp3">
+                  <button class="play-audio-btn" data-surah-id="46">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/046.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">47</td>
+              <td data-label="السورة">محمد</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/047.mp3">
+                  <button class="play-audio-btn" data-surah-id="47">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/047.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">48</td>
+              <td data-label="السورة">الفتح</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/048.mp3">
+                  <button class="play-audio-btn" data-surah-id="48">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/048.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">49</td>
+              <td data-label="السورة">الحجرات</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/049.mp3">
+                  <button class="play-audio-btn" data-surah-id="49">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/049.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">50</td>
+              <td data-label="السورة">ق</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/050.mp3">
+                  <button class="play-audio-btn" data-surah-id="50">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/050.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">51</td>
+              <td data-label="السورة">الذاريات</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/051.mp3">
+                  <button class="play-audio-btn" data-surah-id="51">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/051.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">52</td>
+              <td data-label="السورة">الطور</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/052.mp3">
+                  <button class="play-audio-btn" data-surah-id="52">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/052.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">53</td>
+              <td data-label="السورة">النجم</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/053.mp3">
+                  <button class="play-audio-btn" data-surah-id="53">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/053.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">54</td>
+              <td data-label="السورة">القمر</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/054.mp3">
+                  <button class="play-audio-btn" data-surah-id="54">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/054.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">55</td>
+              <td data-label="السورة">الرحمن</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/055.mp3">
+                  <button class="play-audio-btn" data-surah-id="55">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/055.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">56</td>
+              <td data-label="السورة">الواقعة</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/056.mp3">
+                  <button class="play-audio-btn" data-surah-id="56">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/056.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">57</td>
+              <td data-label="السورة">الحديد</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/057.mp3">
+                  <button class="play-audio-btn" data-surah-id="57">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/057.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">58</td>
+              <td data-label="السورة">المجادلة</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/058.mp3">
+                  <button class="play-audio-btn" data-surah-id="58">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/058.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">59</td>
+              <td data-label="السورة">الحشر</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/059.mp3">
+                  <button class="play-audio-btn" data-surah-id="59">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/059.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">60</td>
+              <td data-label="السورة">الممتحنة</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/060.mp3">
+                  <button class="play-audio-btn" data-surah-id="60">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/060.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">61</td>
+              <td data-label="السورة">الصف</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/061.mp3">
+                  <button class="play-audio-btn" data-surah-id="61">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/061.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">62</td>
+              <td data-label="السورة">الجمعة</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/062.mp3">
+                  <button class="play-audio-btn" data-surah-id="62">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/062.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">63</td>
+              <td data-label="السورة">المنافقون</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/063.mp3">
+                  <button class="play-audio-btn" data-surah-id="63">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/063.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">64</td>
+              <td data-label="السورة">التغابن</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/064.mp3">
+                  <button class="play-audio-btn" data-surah-id="64">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/064.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">65</td>
+              <td data-label="السورة">الطلاق</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/065.mp3">
+                  <button class="play-audio-btn" data-surah-id="65">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/065.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">66</td>
+              <td data-label="السورة">التحريم</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/066.mp3">
+                  <button class="play-audio-btn" data-surah-id="66">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/066.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">67</td>
+              <td data-label="السورة">الملك</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/067.mp3">
+                  <button class="play-audio-btn" data-surah-id="67">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/067.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">68</td>
+              <td data-label="السورة">القلم</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/068.mp3">
+                  <button class="play-audio-btn" data-surah-id="68">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/068.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">69</td>
+              <td data-label="السورة">الحاقة</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/069.mp3">
+                  <button class="play-audio-btn" data-surah-id="69">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/069.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">70</td>
+              <td data-label="السورة">المعارج</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/070.mp3">
+                  <button class="play-audio-btn" data-surah-id="70">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/070.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">71</td>
+              <td data-label="السورة">نوح</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/071.mp3">
+                  <button class="play-audio-btn" data-surah-id="71">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/071.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">72</td>
+              <td data-label="السورة">الجن</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/072.mp3">
+                  <button class="play-audio-btn" data-surah-id="72">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/072.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">73</td>
+              <td data-label="السورة">المزمل</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/073.mp3">
+                  <button class="play-audio-btn" data-surah-id="73">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/073.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">74</td>
+              <td data-label="السورة">المدثر</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/074.mp3">
+                  <button class="play-audio-btn" data-surah-id="74">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/074.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">75</td>
+              <td data-label="السورة">القيامة</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/075.mp3">
+                  <button class="play-audio-btn" data-surah-id="75">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/075.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">76</td>
+              <td data-label="السورة">الإنسان</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/076.mp3">
+                  <button class="play-audio-btn" data-surah-id="76">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/076.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">77</td>
+              <td data-label="السورة">المرسلات</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/077.mp3">
+                  <button class="play-audio-btn" data-surah-id="77">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/077.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">78</td>
+              <td data-label="السورة">النبأ</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/078.mp3">
+                  <button class="play-audio-btn" data-surah-id="78">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/078.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">79</td>
+              <td data-label="السورة">النازعات</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/079.mp3">
+                  <button class="play-audio-btn" data-surah-id="79">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/079.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">80</td>
+              <td data-label="السورة">عبس</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/080.mp3">
+                  <button class="play-audio-btn" data-surah-id="80">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/080.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">81</td>
+              <td data-label="السورة">التكوير</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/081.mp3">
+                  <button class="play-audio-btn" data-surah-id="81">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/081.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">82</td>
+              <td data-label="السورة">الانفطار</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/082.mp3">
+                  <button class="play-audio-btn" data-surah-id="82">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/082.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">83</td>
+              <td data-label="السورة">المطففين</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/083.mp3">
+                  <button class="play-audio-btn" data-surah-id="83">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/083.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">84</td>
+              <td data-label="السورة">الانشقاق</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/084.mp3">
+                  <button class="play-audio-btn" data-surah-id="84">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/084.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">85</td>
+              <td data-label="السورة">البروج</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/085.mp3">
+                  <button class="play-audio-btn" data-surah-id="85">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/085.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">86</td>
+              <td data-label="السورة">الطارق</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/086.mp3">
+                  <button class="play-audio-btn" data-surah-id="86">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/086.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">87</td>
+              <td data-label="السورة">الأعلى</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/087.mp3">
+                  <button class="play-audio-btn" data-surah-id="87">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/087.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">88</td>
+              <td data-label="السورة">الغاشية</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/088.mp3">
+                  <button class="play-audio-btn" data-surah-id="88">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/088.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">89</td>
+              <td data-label="السورة">الفجر</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/089.mp3">
+                  <button class="play-audio-btn" data-surah-id="89">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/089.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">90</td>
+              <td data-label="السورة">البلد</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/090.mp3">
+                  <button class="play-audio-btn" data-surah-id="90">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/090.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">91</td>
+              <td data-label="السورة">الشمس</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/091.mp3">
+                  <button class="play-audio-btn" data-surah-id="91">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/091.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">92</td>
+              <td data-label="السورة">الليل</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/092.mp3">
+                  <button class="play-audio-btn" data-surah-id="92">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/092.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">93</td>
+              <td data-label="السورة">الضحى</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/093.mp3">
+                  <button class="play-audio-btn" data-surah-id="93">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/093.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">94</td>
+              <td data-label="السورة">الشرح</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/094.mp3">
+                  <button class="play-audio-btn" data-surah-id="94">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/094.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">95</td>
+              <td data-label="السورة">التين</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/095.mp3">
+                  <button class="play-audio-btn" data-surah-id="95">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/095.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">96</td>
+              <td data-label="السورة">العلق</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/096.mp3">
+                  <button class="play-audio-btn" data-surah-id="96">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/096.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">97</td>
+              <td data-label="السورة">القدر</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/097.mp3">
+                  <button class="play-audio-btn" data-surah-id="97">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/097.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">98</td>
+              <td data-label="السورة">البينة</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/098.mp3">
+                  <button class="play-audio-btn" data-surah-id="98">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/098.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">99</td>
+              <td data-label="السورة">الزلزلة</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/099.mp3">
+                  <button class="play-audio-btn" data-surah-id="99">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/099.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">100</td>
+              <td data-label="السورة">العاديات</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/100.mp3">
+                  <button class="play-audio-btn" data-surah-id="100">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/100.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">101</td>
+              <td data-label="السورة">القارعة</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/101.mp3">
+                  <button class="play-audio-btn" data-surah-id="101">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/101.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">102</td>
+              <td data-label="السورة">التكاثر</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/102.mp3">
+                  <button class="play-audio-btn" data-surah-id="102">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/102.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">103</td>
+              <td data-label="السورة">العصر</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/103.mp3">
+                  <button class="play-audio-btn" data-surah-id="103">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/103.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">104</td>
+              <td data-label="السورة">الهمزة</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/104.mp3">
+                  <button class="play-audio-btn" data-surah-id="104">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/104.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">105</td>
+              <td data-label="السورة">الفيل</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/105.mp3">
+                  <button class="play-audio-btn" data-surah-id="105">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/105.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">106</td>
+              <td data-label="السورة">قريش</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/106.mp3">
+                  <button class="play-audio-btn" data-surah-id="106">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/106.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">107</td>
+              <td data-label="السورة">الماعون</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/107.mp3">
+                  <button class="play-audio-btn" data-surah-id="107">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/107.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">108</td>
+              <td data-label="السورة">الكوثر</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/108.mp3">
+                  <button class="play-audio-btn" data-surah-id="108">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/108.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">109</td>
+              <td data-label="السورة">الكافرون</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/109.mp3">
+                  <button class="play-audio-btn" data-surah-id="109">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/109.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">110</td>
+              <td data-label="السورة">النصر</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/110.mp3">
+                  <button class="play-audio-btn" data-surah-id="110">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/110.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">111</td>
+              <td data-label="السورة">المسد</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/111.mp3">
+                  <button class="play-audio-btn" data-surah-id="111">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/111.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">112</td>
+              <td data-label="السورة">الإخلاص</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/112.mp3">
+                  <button class="play-audio-btn" data-surah-id="112">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/112.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">113</td>
+              <td data-label="السورة">الفلق</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/113.mp3">
+                  <button class="play-audio-btn" data-surah-id="113">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/113.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            <tr>
+              <td data-label="رقم">114</td>
+              <td data-label="السورة">الناس</td>
+              <td data-label="استماع" class="audio-player-container" data-mp3-url="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/114.mp3">
+                  <button class="play-audio-btn" data-surah-id="114">تشغيل 🔊</button>
+              </td>
+              <td data-label="تحميل"><a href="https://download.tvquran.com/download/TvQuran.com__Tawfeeq/114.mp3" download>⬇ تحميل</a></td>
+            </tr>
+            
+            </tbody>
+      </table>
+  </div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    let activePlayer = null; // لتتبع المشغل الصوتي النشط حالياً
+
+    const table = document.querySelector('.surah-list');
+
+    // الدالة المسؤولة عن إيقاف جميع المشغلات وإزالة التمييز
+    function resetPlayersAndHighlights() {
+        document.querySelectorAll('.surah-list tr').forEach(row => {
+            row.classList.remove('is-playing');
+        });
+        if (activePlayer && !activePlayer.paused) {
+            activePlayer.pause();
+        }
+    }
+
+    // الاستماع لجميع الضغطات داخل الجدول
+    table.addEventListener('click', function(e) {
+        // التحقق مما إذا كان العنصر الذي تم النقر عليه هو زر "تشغيل"
+        if (e.target.classList.contains('play-audio-btn')) {
+            const button = e.target;
+            const container = button.closest('.audio-player-container');
+            const row = button.closest('tr');
+            const mp3Url = container.dataset.mp3Url;
+
+            if (!mp3Url) return; // تحقق احتياطي من وجود الرابط
+
+            // 1. إيقاف وإلغاء تمييز أي شيء آخر قبل البدء بالتشغيل الجديد
+            resetPlayersAndHighlights();
+            
+            // 2. إزالة زر التشغيل
+            button.style.display = 'none';
+
+            // 3. إنشاء مشغل الصوت ديناميكياً
+            const newPlayer = document.createElement('audio');
+            newPlayer.controls = true;
+            newPlayer.autoplay = true; // البدء بالتشغيل مباشرة بعد التحميل
+            newPlayer.src = mp3Url;
+
+            // 4. ربط المشغل بالخلية
+            container.appendChild(newPlayer);
+            activePlayer = newPlayer; // تحديث المشغل النشط
+
+            // 5. إضافة تمييز للصف الحالي
+            row.classList.add('is-playing');
+
+            // 6. إضافة مستمعي الأحداث للمشغل الذي تم إنشاؤه
+            
+            // عند انتهاء التشغيل، إزالة التمييز، وإعادة زر التشغيل
+            newPlayer.addEventListener('ended', function() {
+                row.classList.remove('is-playing');
+                container.removeChild(newPlayer);
+                button.style.display = 'block';
+                activePlayer = null;
+            });
+
+            // عند إيقاف التشغيل يدوياً، إزالة التمييز
+            newPlayer.addEventListener('pause', function() {
+                 // إذا تم إيقافه يدوياً، أزِل المشغل وأعد الزر
+                if(newPlayer.currentTime < newPlayer.duration && !newPlayer.ended) {
+                    row.classList.remove('is-playing');
+                    container.removeChild(newPlayer);
+                    button.style.display = 'block';
+                    activePlayer = null;
+                }
+            });
+            
+             // عند بدء التحميل (لإيقاف أي ملف آخر قد يكون بدأ تحميله قبل الضغط)
+            newPlayer.addEventListener('play', function() {
+                // التأكد من أن المشغل النشط هو هذا المشغل (مهم عند تبديل المشغلات بسرعة)
+                if (activePlayer !== newPlayer) {
+                    resetPlayersAndHighlights();
+                    activePlayer = newPlayer;
+                    row.classList.add('is-playing');
+                }
+            });
+        }
+    });
+});
+</script>
+</body>
+</html>
